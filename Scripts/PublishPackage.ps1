@@ -21,7 +21,7 @@ function Publish-Package {
     }
 
    $form         = @{name                 = 'file'
-                    filename              = Get-Item -Path $Path+$FileName
+                    filename              = Get-Item -Path $Path$FileName
                     'Content-Type'        = 'application/octet-stream'
                    } 
 
