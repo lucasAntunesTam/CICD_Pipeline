@@ -1,6 +1,5 @@
 $Path=$args[0]
-$API_PWD=$args[2]
-$API_ID=$args[1]
+$FileName = gci $Path | select -expand Name
 
 function Get-Token {
     $body = @{client_id = $env:ORCH_CLIENT_ID
@@ -22,7 +21,7 @@ function Publish-Package {
     }
 
    $form         = @{name                 = 'file'
-                    filename              = Get-Item -Path $Path
+                    filename              = Get-Item -Path $Path+$FileName
                     'Content-Type'        = 'application/octet-stream'
                    } 
 
