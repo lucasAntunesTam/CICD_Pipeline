@@ -4,7 +4,7 @@ name: Development workflow
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "main" ]
+    branches: [ "mainn" ]
   pull_request:
     branches: [ "main" ]
 
@@ -51,7 +51,7 @@ jobs:
       - name: Build nuget package 
         shell:  pwsh
         run:  |
-          ${{ github.workspace }}\.entities\CLI\tools\uipcli.exe package pack "${{ github.workspace }}\project.json" -o "${{ github.workspace }}\package" --autoVersion --outputType "Tests" --libraryOrchestratorUrl "https://staging.uipath.com/" --libraryOrchestratorTenant "DefaultTenant" --libraryOrchestratorApplicationId $ORCH_CLIENT_ID --libraryOrchestratorApplicationSecret $ORCH_SECRET --libraryOrchestratorAccountForApp "lucas_antunes_tam" --libraryOrchestratorApplicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Monitoring OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Administration OR.Analytics OR.Audit OR.Hypervisor OR.License OR.Machines OR.ML OR.Queues OR.Robots OR.Settings OR.Tasks OR.TestDataQueues OR.Users OR.Webhooks" --libraryOrchestratorFolder "teste"
+          ${{ github.workspace }}\.entities\CLI\tools\uipcli.exe package pack "${{ github.workspace }}\project.json" -o "${{ github.workspace }}\package" --autoVersion --outputType "Tests" --libraryOrchestratorUrl "https://staging.uipath.com/" --libraryOrchestratorTenant "DefaultTenant" --libraryOrchestratorApplicationId ${{env.ORCH_CLIENT_ID}} --libraryOrchestratorApplicationSecret ${{env.ORCH_SECRET}} --libraryOrchestratorAccountForApp "lucas_antunes_tam" --libraryOrchestratorApplicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Monitoring OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Administration OR.Analytics OR.Audit OR.Hypervisor OR.License OR.Machines OR.ML OR.Queues OR.Robots OR.Settings OR.Tasks OR.TestDataQueues OR.Users OR.Webhooks" --libraryOrchestratorFolder "teste"
           ls ${{ github.workspace }}\package
       - name: Upload UiPath Artifacts
         uses: actions/upload-artifact@v4
@@ -70,7 +70,7 @@ jobs:
           name: Artifacts
       - name: Publish Nuget Package to DEV
         shell:  pwsh
-        run:  ${{ github.workspace }}\scripts\PublishPackageToDev.ps1 ${{ github.workspace }}\package\BLG-ARX-GetWork*.nupkg  #Dept-BU-ProcessName
+        run:  ${{ github.workspace }}\scripts\PublishPackageToDev.ps1 ${{ github.workspace }}\package\*.nupkg  ${{env.ORCH_CLIENT_ID}} ${{env.ORCH_SECRET}}
 
   add-process-to-folder:
     needs:   publish-uipath-nuget-package
