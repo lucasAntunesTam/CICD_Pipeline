@@ -67,6 +67,8 @@ jobs:
 #        uses: actions/download-artifact@v4
 #        with:
 #          name: Artifacts
+      - name: Check out repository code 
+        uses: actions/checkout@v4
       - name: Publish Nuget Package to DEV
         shell:  pwsh
         run:  ${{ github.workspace }}\Scripts\PublishPackage.ps1
