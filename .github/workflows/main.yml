@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Analyze project for errors  
         shell:  pwsh
-        run:  ${{ github.workspace }}\.entities\CLI\tools\uipcli.exe package analyze "${{ github.workspace }}\project.json" --analyzerTraceLevel "Error"  --resultPath "${{ github.workspace }}\validate.json" --orchestratorUrl "https://staging.uipath.com/" --orchestratorTenant "DefaultTenant" --orchestratorApplicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Monitoring OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Administration OR.Analytics OR.Audit OR.Hypervisor OR.License OR.Machines OR.ML OR.Queues OR.Robots OR.Settings OR.Tasks OR.TestDataQueues OR.Users OR.Webhooks" --orchestratorAccountForApp "lucas_antunes_tam" --orchestratorApplicationId ${{ secrets.APP_ID }} --orchestratorApplicationSecret ${{ secrets.APP_PWD }} --orchestratorFolder "teste"
+        run:  ${{ github.workspace }}\.entities\CLI\tools\uipcli.exe package analyze "${{ github.workspace }}\project.json" --analyzerTraceLevel "Error"  --resultPath "${{ github.workspace }}\validate.json" --orchestratorUrl "https://staging.uipath.com/" --orchestratorTenant "DefaultTenant" --orchestratorApplicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Monitoring OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Administration OR.Analytics OR.Audit OR.Hypervisor OR.License OR.Machines OR.ML OR.Queues OR.Robots OR.Settings OR.Tasks OR.TestDataQueues OR.Users OR.Webhooks" --orchestratorAccountForApp "lucas_antunes_tam" --orchestratorApplicationId $ORCH_CLIENT_ID --orchestratorApplicationSecret $ORCH_SECRET --orchestratorFolder "teste"
       - name: Upload Analyzer File
         uses: actions/upload-artifact@v4
         with: 
@@ -51,15 +51,14 @@ jobs:
       - name: Build nuget package 
         shell:  pwsh
         run:  |
-          ${{ github.workspace }}\scripts\tools\tools\uipcli.exe package pack "${{ github.workspace }}\project.json" -o "${{ github.workspace }}\package" --autoVersion --outputType "Tests" --libraryOrchestratorUrl "https://cloud.uipath.com/" --libraryOrchestratorTenant "dev" --libraryOrchestratorApplicationId ${{ secrets.UIPATHCLIENTID }} --libraryOrchestratorApplicationSecret ${{ secrets.UIPATHCLIENTSECRET }} --libraryOrchestratorAccountForApp "myriadgeneticsinc" --libraryOrchestratorApplicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Monitoring OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Administration OR.Analytics OR.Audit OR.Hypervisor OR.License OR.Machines OR.ML OR.Queues OR.Robots OR.Settings OR.Tasks OR.TestDataQueues OR.Users OR.Webhooks" --libraryOrchestratorFolder "BLG-ARX"
+          ${{ github.workspace }}\.entities\CLI\tools\uipcli.exe package pack "${{ github.workspace }}\project.json" -o "${{ github.workspace }}\package" --autoVersion --outputType "Tests" --libraryOrchestratorUrl "https://staging.uipath.com/" --libraryOrchestratorTenant "DefaultTenant" --libraryOrchestratorApplicationId $ORCH_CLIENT_ID --libraryOrchestratorApplicationSecret $ORCH_SECRET --libraryOrchestratorAccountForApp "lucas_antunes_tam" --libraryOrchestratorApplicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Monitoring OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Administration OR.Analytics OR.Audit OR.Hypervisor OR.License OR.Machines OR.ML OR.Queues OR.Robots OR.Settings OR.Tasks OR.TestDataQueues OR.Users OR.Webhooks" --libraryOrchestratorFolder "teste"
           ls ${{ github.workspace }}\package
       - name: Upload UiPath Artifacts
         uses: actions/upload-artifact@v4
         with: 
           name: Artifacts
-          path: |
-            package/*.*
-            scripts/*.ps1
+          path: package/*.*
+
 
   publish-uipath-nuget-package:
     needs:  build-uipath-nuget-package
