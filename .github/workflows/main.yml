@@ -69,7 +69,7 @@ jobs:
 #          name: Artifacts
       - name: Publish Nuget Package to DEV
         shell:  pwsh
-        run:  .\.entities\PublishPackage.ps1 
+        run:  ${{ github.workspace }}\.entities\PublishPackage.ps1 
         #${{ github.workspace }}\package\*.nupkg  ${{env.ORCH_CLIENT_ID}} ${{env.ORCH_SECRET}}
 
   add-process-to-folder:
