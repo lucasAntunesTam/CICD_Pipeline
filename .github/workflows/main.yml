@@ -69,7 +69,8 @@ jobs:
 #          name: Artifacts
       - name: Publish Nuget Package to DEV
         shell:  pwsh
-        run:  ${{ github.workspace }}/.github/workflows/PublishPackage.ps1 ${{ github.workspace }}\package\*.nupkg  ${{env.ORCH_CLIENT_ID}} ${{env.ORCH_SECRET}}
+        run:  .\.github\workflows\PublishPackage.ps1 
+        #${{ github.workspace }}\package\*.nupkg  ${{env.ORCH_CLIENT_ID}} ${{env.ORCH_SECRET}}
 
   add-process-to-folder:
     needs:   publish-uipath-nuget-package
