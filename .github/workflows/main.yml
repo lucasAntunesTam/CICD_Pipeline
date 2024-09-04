@@ -4,7 +4,7 @@ name: Development workflow
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "main" ]
+    branches: [ "maiin" ]
   pull_request:
     branches: [ "main" ]
 
@@ -75,7 +75,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Publish Nuget Package to DEV
         shell:  pwsh
-        run: ${{ github.workspace }}\Scripts\PublishPackage.ps1 ${{ github.workspace }}\package\*.nupkg  ${{env.ORCH_CLIENT_ID}} ${{env.ORCH_SECRET}}
+        run: ${{ github.workspace }}\Scripts\PublishPackage.ps1 ${{ github.workspace }}\package\*.nupkg
 
   add-process-to-folder:
     needs:   publish-uipath-nuget-package
