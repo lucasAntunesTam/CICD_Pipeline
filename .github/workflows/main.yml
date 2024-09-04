@@ -11,9 +11,9 @@ on:
 # Here the environment variable is declared in workflow level
 env:
   PROJECT_NAME: My_Project_Name
-  #PROJECT_FOLDER: ${{ github.action_path }}
-  ORCH_SECRET:  ${{ secrets.APP_ID }} #create in repository
-  ORCH_CLIENT_ID: ${{ secrets.APP_PWD }} #create in repository
+  #PROJECT_FOLDER: ${{ github.action_path }} 
+  ORCH_CLIENT_ID: ${{ secrets.APP_ID }} #create in repository
+  ORCH_SECRET: ${{ secrets.APP_PWD }} #create in repository
   #GH_TOKEN: ${{ github.token }}
 
 
@@ -25,6 +25,7 @@ jobs:
         run: |
           echo "Cleaning up previous run"
           rm -rf "$ {{ github.workspace }}"
+          echo ORCH_SECRET
 
   analyze-project:
     needs: cleaner
