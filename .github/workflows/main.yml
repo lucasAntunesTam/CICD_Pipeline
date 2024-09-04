@@ -71,8 +71,8 @@ jobs:
       - name: Check file
         shell:  pwsh
         run:  ls -R ${{ github.workspace }}\package
-      - name: Check out repository code 
-        uses: actions/checkout@v4
+#      - name: Check out repository code 
+#        uses: actions/checkout@v4
       - name: Publish Nuget Package to DEV
         shell:  pwsh
         run: ${{ github.workspace }}\Scripts\PublishPackage.ps1 ${{ github.workspace }}\package\
