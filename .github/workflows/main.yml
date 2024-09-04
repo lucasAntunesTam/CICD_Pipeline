@@ -56,7 +56,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with: 
           name: Artifacts
-          path: package/*.*
 
 
   publish-uipath-nuget-package:
@@ -67,11 +66,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: Artifacts
+          path: ${{ github.workspace }}\package
+      - name: Check file
+        shell:  pwsh
+        run:  ls -R ${{ github.workspace }}\package
       - name: Check out repository code 
         uses: actions/checkout@v4
       - name: Publish Nuget Package to DEV
         shell:  pwsh
-        run:  ${{ github.workspace }}\Scripts\PublishPackage.ps1 ${{ github.workspace }}\package\*.nupkg  ${{env.ORCH_CLIENT_ID}} ${{env.ORCH_SECRET}}
+        run: ${{ github.workspace }}\Scripts\PublishPackage.ps1 ${{ github.workspace }}\package\*.nupkg  ${{env.ORCH_CLIENT_ID}} ${{env.ORCH_SECRET}}
 
   add-process-to-folder:
     needs:   publish-uipath-nuget-package
