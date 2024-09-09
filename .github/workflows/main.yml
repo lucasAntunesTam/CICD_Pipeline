@@ -43,7 +43,7 @@ jobs:
 #          path: validate.json
       
   build-uipath-nuget-package:
-  #--libraryOrchestratorTenant "DefaultTenant" --libraryOrchestratorApplicationId ${{env.ORCH_CLIENT_ID}} --libraryOrchestratorApplicationSecret ${{env.ORCH_SECRET}} --libraryOrchestratorAccountForApp "lucas_antunes_tam" --libraryOrchestratorApplicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Monitoring OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Administration OR.Analytics OR.Audit OR.Hypervisor OR.License OR.Machines OR.ML OR.Queues OR.Robots OR.Settings OR.Tasks OR.TestDataQueues OR.Users OR.Webhooks" --libraryOrchestratorFolder "teste"
+  #--libraryOrchestratorTenant "DefaultTenant" --libraryOrchestratorApplicationId ${{env.ORCH_CLIENT_ID}} --libraryOrchestratorApplicationSecret ${{env.ORCH_SECRET}} --libraryOrchestratorAccountForApp "lucas_antunes_tam" --libraryOrchestratorApplicationScope OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Monitoring OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Administration OR.Analytics OR.Audit OR.Hypervisor OR.License OR.Machines OR.ML OR.Queues OR.Robots OR.Settings OR.Tasks OR.TestDataQueues OR.Users OR.Webhooks --libraryOrchestratorFolder "teste"
     needs: analyze-project
     runs-on: windows-latest
     steps:
