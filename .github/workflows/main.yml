@@ -21,10 +21,15 @@ jobs:
   cleaner:
     runs-on:  ubuntu-latest
     steps:
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: lucasAntunesTam
       - name: Runner workspace path
         run: |
           echo "Cleaning up previous run"
           rm -rf "$ {{ github.workspace }}"
+
 
   analyze-project:
     needs: cleaner
