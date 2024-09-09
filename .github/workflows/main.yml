@@ -4,7 +4,7 @@ name: Development workflow
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "main" ]
+    branches: [ "maiin" ]
   pull_request:
     branches: [ "main" ]
 
@@ -21,10 +21,6 @@ jobs:
   cleaner:
     runs-on:  ubuntu-latest
     steps:
-      - uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.TOKEN }}
-          approvers: lucasAntunesTam
       - name: Runner workspace path
         run: |
           echo "Cleaning up previous run"
@@ -80,8 +76,6 @@ jobs:
         run:  |
             ls ${{ github.workspace }}
             ls ${{ github.workspace }}\package
-#      - name: Check out repository code 
-#        uses: actions/checkout@v4
       - name: Publish Nuget Package to DEV
         shell:  pwsh
         run: ${{ github.workspace }}\Scripts\PublishPackage.ps1 ${{ github.workspace }}\package\
@@ -90,22 +84,21 @@ jobs:
     needs:   publish-uipath-nuget-package
     runs-on:  windows-latest
     steps:
-      - name: Download UiPath Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: Artifacts
+      - name: Check out repository code 
+        uses: actions/checkout@v4
       - name: Add Process to Folder
         shell:  pwsh
-        run:  ${{ github.workspace }}\scripts\AddProcessToDev.ps1
+        run:  ${{ github.workspace }}\Scripts\AddProcessToDev.ps1
 
   test-uipath-published-package:
     needs:  add-process-to-folder
     runs-on:  windows-latest
     steps:
       - name: Download UiPath Artifacts
-        uses: actions/download-artifact@v4
+      - uses: trstringer/manual-approval@v1
         with:
-          name: Artifacts
+          secret: ${{ github.TOKEN }}
+          approvers: lucasAntunesTam
       - name: Get Test Cases
         shell:  pwsh
         run:  ${{ github.workspace }}\scripts\GetTests.ps1 
