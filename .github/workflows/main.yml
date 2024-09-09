@@ -96,7 +96,7 @@ jobs:
     steps:
   #Should use environments instead, if public repo or organization
       - name: Ask por approval
-      - uses: trstringer/manual-approval@v1
+        uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
           approvers: lucasAntunesTam
