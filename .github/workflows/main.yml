@@ -4,7 +4,7 @@ name: Development workflow
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "main" ]
+    branches: [ "maiin" ]
   pull_request:
     branches: [ "main" ]
 
@@ -89,17 +89,24 @@ jobs:
       - name: Add Process to Folder
         shell:  pwsh
         run:  ${{ github.workspace }}\Scripts\AddToFolder.ps1
-
-  test-uipath-published-package:
+        
+  Wait-for-approval:
     needs:  add-process-to-folder
-    runs-on:  windows-latest
+    runs-on:  ubuntu-latest
     steps:
-  #Should use environments instead, if public repo or organization
+#Should use environments instead, if public repo or organization
       - name: Ask por approval
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
           approvers: lucasAntunesTam
+      - name: Runner workspace path
+        run:  echo "approval received"
+          
+  test-uipath-published-package:
+    needs:  Wait-for-approval
+    runs-on:  windows-latest
+    steps:
       - name: Get Test Cases
         shell:  pwsh
         run:  ${{ github.workspace }}\scripts\GetTests.ps1 
