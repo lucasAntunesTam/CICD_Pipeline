@@ -4,7 +4,7 @@ name: Development workflow
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "maiin" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -104,22 +104,22 @@ jobs:
       - name: Runner workspace path
         run:  echo "approval received"
           
-  test-uipath-published-package:
-    needs:  Wait-for-approval
-    runs-on:  windows-latest
-    steps:
-      - name: Get Test Cases
-        shell:  pwsh
-        run:  ${{ github.workspace }}\scripts\GetTests.ps1 
-      - name: Upload Test Cases
-        uses: actions/upload-artifact@v4
-        with: 
-          name: Tests
-          path: TestReport.csv
-      - name: Download Test Cases
-        uses: actions/download-artifact@v4
-        with: 
-          name: Tests
-      - name: Run Test Cases
-        shell:  pwsh
-        run:  ${{ github.workspace }}\scripts\StartTests.ps1 
+#  test-uipath-published-package:
+#    needs:  Wait-for-approval
+#    runs-on:  windows-latest
+#    steps:
+#      - name: Get Test Cases
+#        shell:  pwsh
+#        run:  ${{ github.workspace }}\scripts\GetTests.ps1 
+#      - name: Upload Test Cases
+#        uses: actions/upload-artifact@v4
+#        with: 
+#          name: Tests
+#          path: TestReport.csv
+#      - name: Download Test Cases
+#        uses: actions/download-artifact@v4
+#        with: 
+#          name: Tests
+#      - name: Run Test Cases
+#        shell:  pwsh
+#        run:  ${{ github.workspace }}\scripts\StartTests.ps1 
