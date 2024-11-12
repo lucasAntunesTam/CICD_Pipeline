@@ -1,0 +1,16 @@
+on:
+  workflow_call:
+    inputs:
+      test:
+        required: true
+        type: string
+
+jobs:
+  testing_job:
+    runs-on: windows-latest
+    steps:
+    - name: Test Input 
+      shell:  pwsh
+      run: |
+        echo ${{ inputs.test }}
+        ls ${{ github.workspace }}
