@@ -23,7 +23,7 @@ jobs:
     - name: Check out repository code 2
       uses: actions/checkout@v4
       with:
-        repository: ${{ inputs.test }}
+        repository: lucasAntunesTam/CICD_Pipeline
         path: main2
       
     - name: Build nuget package 
