@@ -14,3 +14,20 @@ jobs:
       run: |
         echo ${{ inputs.test }}
         ls ${{ github.workspace }}
+        
+    - name: Check out repository code 
+      uses: actions/checkout@v4
+      with:
+        path: main
+        
+    - name: Check out repository code 2
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.test }}
+        path: main2
+      
+    - name: Build nuget package 
+      shell:  pwsh
+      run: |
+        ls ${{ github.workspace }}\main
+        ls ${{ github.workspace }}\main2
